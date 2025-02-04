@@ -4221,7 +4221,8 @@ class Trainer:
                 if not self.args.batch_eval_metrics or description == "Prediction":
                     all_preds.add(logits)
             if labels is not None:
-                labels = self.gather_function((labels))
+                # labels = self.gather_function((labels))
+                labels = self.accelerator.gather_for_metrics((labels), use_gather_object=True)
                 if not self.args.batch_eval_metrics or description == "Prediction":
                     all_labels.add(labels)
 
